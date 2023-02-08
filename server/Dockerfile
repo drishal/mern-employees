@@ -1,7 +1,7 @@
 FROM node
-WORKDIR /app/frontend
+WORKDIR /app/server
 
-COPY package.json package-lock.json ./
+COPY package.json ./
 RUN npm install 
 # RUN npm install react-scripts -g 
 COPY . ./
