@@ -6,8 +6,6 @@ services:
     container_name: mongodb
     ports:
       - 27017:27017
-    # volumes:
-      # - mongodb_data:/data/db
     network_mode: host
 
   express:
@@ -18,8 +16,6 @@ services:
       - MONGO_URI=mongodb://mongodb:27017/employees
     ports:
       - 3000:3000
-    # env_file:
-      # - ./.env.dev
     volumes:
       - ./server/:/srv/app
     network_mode: host
@@ -30,15 +26,13 @@ services:
     command: npm start
     ports:
       - 5000:5000
-    # env_file:
-    #   - ./.env.dev
     network_mode: host
     tty: true
     environment:
       - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./client/:/srv/app
-      - /srv/app/node_modules
+      - ./client/:/srv/app/node_modules
     depends_on:
       - express
 
