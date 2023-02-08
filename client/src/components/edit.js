@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-require('dotenv').config();
  
 export default function Edit() {
  const [form, setForm] = useState({
