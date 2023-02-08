@@ -5,4 +5,4 @@ COPY package.json ./
 RUN npm install 
 # RUN npm install react-scripts -g 
 COPY . ./
-EXPOSE 5000
+EXPOSE 3000
