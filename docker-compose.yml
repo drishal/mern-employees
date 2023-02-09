@@ -17,6 +17,7 @@ services:
       - 5000:5000
     volumes:
       - ./server/:/srv/app
+    network_mode: host
 
   react:
     build: ./client
@@ -30,6 +31,7 @@ services:
     volumes:
       - ./client/:/srv/app
       - ./client/:/srv/app/node_modules
+    network_mode: host
     depends_on:
       - express
 
