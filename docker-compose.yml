@@ -19,9 +19,10 @@ services:
       - 5000:5000
     volumes:
       - ./server/:/srv/app
-      - mongodb_data:/data/db
-    networks:
-      - mynetwork
+    depends_on:
+      - mongodb
+      
+    network_mode: host
 
   react:
     build: ./client
@@ -36,15 +37,7 @@ services:
     volumes:
       - ./client/:/srv/app
       - ./client/:/srv/app/node_modules
-      - mongodb_data:/data/db
     depends_on:
       - express
-    networks:
-      - mynetwork
-
-networks:
-  mynetwork:
-    driver: bridge
-
 volumes:
   mongodb_data:
