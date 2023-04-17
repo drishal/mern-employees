@@ -11,7 +11,9 @@ export default function Navbar() {
  return (
    <div>
      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-              <button
+       <NavLink className="navbar-brand" to="/">
+       </NavLink>
+       <button
          className="navbar-toggler"
          type="button"
          data-toggle="collapse"

@@ -1,13 +1,14 @@
-version: "3.3" # Mostly as I don't use compose >3.8
+version: "3.9"
 
 services:
   mongodb:
-    image: mongo:4.4.18 # Mostly as I can't support >5
+    image: mongo:latest
     container_name: mongodb
     ports:
       - 27017:27017
-    volumes:
-      - ./db:/data/db # mostly as I wanted to keep relative data nearby
+    # volumes:
+      # - mongodb_data:/data/db
+    network_mode: host
 
   express:
     build: ./server
@@ -16,25 +17,28 @@ services:
     environment:
       - MONGO_URI=mongodb://mongodb:27017/employees
     ports:
-      - 5000:5000
+      - 3000:3000
+    # env_file:
+      # - ./.env.dev
     volumes:
-      - ./server/:/app/server # this
-    depends_on:
-      - mongodb
-      
-#    network_mode: host
+      - ./server/:/srv/app
+    network_mode: host
 
   react:
     build: ./client
     container_name: react-frontend
     command: npm start
     ports:
-      - 3000:3000
+      - 5000:5000
+    # env_file:
+    #   - ./.env.dev
+    network_mode: host
+    tty: true
     environment:
-      - API_URL=http://express:5000 
       - CHOKIDAR_USEPOLLING=true
+      - API_URL=http://0.0.0.0:5000 
     volumes:
-      - ./client/:/app/client # this
-      - ./client/:/app/client/node_modules # this
+      - ./client/:/srv/app
+      - /srv/app/node_modules
     depends_on:
       - express
